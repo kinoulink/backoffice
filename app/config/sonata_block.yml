@@ -1,0 +1,23 @@
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+        sonata.block.service.text:
+            contexts: [admin]
+        sonata.admin.block.search_result:
+            contexts:   [admin]
+        sonata.block.service.stat:
+            contexts:   [admin]
+
+        sonata.timeline.block.timeline: ~
+
+        # UserBundle's Blocks
+        sonata.user.block.account:
+            cache: sonata.page.cache.js_async
+            #cache: sonata.page.cache.esi
+            contexts: [user]
+        sonata.user.block.menu:
+            contexts: [user]
+        sonata.block.service.rss: ~

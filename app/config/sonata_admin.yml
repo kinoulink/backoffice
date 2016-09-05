@@ -1,0 +1,41 @@
+sonata_admin:
+
+    title: KTV
+    title_logo: /img/logo.png
+
+    templates:
+        layout: "@backoffice/standard_layout.html.twig"
+        list: "@backoffice/Sonata/admin/list.html.twig"
+        base_list_field: "@backoffice/Admin/list_field.html.twig"
+
+    dashboard:
+
+        blocks:
+          - { position: top, type: sonata.block.service.stat, settings : { text: 'Customers', code: "crm.admin.customer", icon: fa-picture-o }, class: col-md-3 }
+          - { position: top, type: sonata.block.service.stat, settings : { text: 'Peoples', code: "crm.admin.people", icon: fa-television, color: bg-green  }, class: col-md-3 }
+          - { position: left, type: sonata.admin.block.admin_list }
+
+        groups:
+            sonata.admin.group.backoffice:
+              label: KTV
+              items:
+                - back_office.admin.config
+
+            sonata.admin.group.crm:
+              label: CRM
+              items:
+                - crm.admin.customer
+                - crm.admin.people
+
+
+    assets:
+
+        stylesheets:
+            - 'assets/css/vendor.css'
+            - 'assets/css/app.css'
+
+
+        javascripts:
+            - 'assets/js/vendor.js'
+            - 'assets/js/app.js'
+            - 'assets/js/locales.js'

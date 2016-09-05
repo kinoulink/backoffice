@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    {% if object.genre == "media" %}
+        <img style="max-width: 64px; max-height: 64px" src="{{ object | url_thumb  }}" />
+    {% else %}
+
+    {% endif %}
+{% endblock %}

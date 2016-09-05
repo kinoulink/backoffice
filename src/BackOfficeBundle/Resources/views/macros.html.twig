@@ -1,0 +1,8 @@
+{% macro box_alert(level, title, content) %}
+    <div class="alert alert-{{ level }}">
+        <h4>{{ title | trans }}</h4>
+        <p>
+            <i class="fa fa-exclamation"></i> {{ content | trans }}
+        </p>
+    </div>
+{% endmacro %}

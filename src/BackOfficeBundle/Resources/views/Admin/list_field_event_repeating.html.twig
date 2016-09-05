@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    {% if object.repeating | length > 0 %}
+        <ul>
+        {% for day in object.repeating %}
+            <li>{{ ("day_week_" ~ day) | trans }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

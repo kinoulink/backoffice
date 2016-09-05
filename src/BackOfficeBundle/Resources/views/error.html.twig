@@ -1,0 +1,22 @@
+{% extends "AppBundle::standard_layout.html.twig" %}
+
+{% block content %}
+
+    {% if message is defined %}
+    <h1>Erreur server</h1>
+
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+    {% endif %}
+
+    <h2>Contacter le service client</h2>
+
+    <div class="well">
+        {{ form_start(form, { action : path("sav_ticket")}) }}
+        {{ form_widget(form) }}
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

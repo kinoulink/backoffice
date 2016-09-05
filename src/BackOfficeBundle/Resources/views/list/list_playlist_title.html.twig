@@ -1,0 +1,8 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    <div>
+        <i style="background: {{ object.color }}; width: 32px; height: 32px; border-radius: 32px; display: inline-block"></i>
+        {{ object.title }}
+    </div>
+{% endblock %}

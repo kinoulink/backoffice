@@ -1,0 +1,123 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block form_row -%}
+    <div id="form-group-{{ id }}" class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        {% if help is defined %}
+            <span class="help-block">{{ help }}</span>
+        {% endif %}
+        <div class="{{ block('form_group_class') }}">
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        </div>
+        {##}</div>
+{%- endblock form_row %}
+
+{% block item_select_widget %}
+    {{ parent() }}
+        <input type="hidden" {{ block('widget_attributes') }} {% if value is defined and value is not null %} value="{{ value.id }}"{% endif %} />
+        {% if form.vars.items | length == 0 %}
+            <div class="alert alert-danger">Pas encore de média ?</div>
+        {% else %}
+            <input id="{{ id }}_search" type="text" class="form-control" placeholder="{{ "form.label.item.select.search.placeholder" | trans }}" />
+            <br />
+            <div id="{{ id }}_suggestions" class="clearfix ktv_form_item_select">
+                {% if value is defined and value is not null%}
+                    {% include "@app/Admin/Item/suggest.html.twig" with { items : [value], selected : value } %}
+                {% endif %}
+
+                {% include "@app/Admin/Item/suggest.html.twig" with { items : form.vars.items } %}
+            </div>
+        {% endif %}
+    <style>
+        .ktv_form_item_select .thumbnail
+        {
+            height: 180px;
+        }
+
+        .ktv_form_item_select .__t
+        {
+            height: 30px;
+            margin-top: 5px;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+        }
+    </style>
+    <script>
+        $(function()
+        {
+            var $suggest = $('#{{ id }}_search'), tm = 0, $container = $('.ktv_form_item_select');
+
+            $container.on('click', 'a.thumbnail', function()
+            {
+                $('#{{ id }}').val($(this).data('id'));
+
+                $container.find('a.thumbnail').removeClass('active');
+
+                {% if form.parent.children.duration is defined %}
+                $('#{{ form.parent.children.duration.vars.id }}').val($(this).data('duration'));
+                {% endif %}
+
+                $(this).addClass('active');
+
+                return false;
+            });
+
+            $suggest.on('keydown', function()
+            {
+                clearTimeout(tm);
+
+                tm = setTimeout(function()
+                {
+                    suggest();
+                }, 300);
+            });
+
+            function suggest()
+            {
+                $.get("{{ path("suggest_item", { "_format" : "html"}) }}", { q : $suggest.val()}, function(value)
+                {
+                    $("#{{ id }}_suggestions").html(value);
+                });
+            }
+        })
+    </script>
+{% endblock %}
+
+
+{% block calendar_widget %}
+    {% spaceless %}
+
+        <div style="overflow:hidden;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" />
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#{{ id }}').datetimepicker({
+                        inline: true,
+                        locale: "fr",
+                        sideBySide: true,
+                        showTodayButton: true
+                    });
+                });
+            </script>
+        </div>
+
+    {% endspaceless %}
+{% endblock %}
+{#
+{% block calendar_repeat_widget %}
+    {% spaceless %}
+        {% for date in ["Monday", "Thuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
+        <div>
+            <label><input type="checkbox" /> {{ date }}</label>
+        </div>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock %}
+#}

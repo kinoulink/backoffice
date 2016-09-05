@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field%}
+    <div>
+        <img src="{{ object | url_image }}" style="width: 32px; height: 32px" />
+    </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% spaceless %}
+        <select class="__select_items" {{ block('widget_attributes') }} data-sonata-select2="false" style="width: 100%">
+            {% if value %}<option selected="selected" value="{{ value.id }}"></option>{% endif %}
+        </select>
+        <script>
+            $(function()
+            {
+                $("#{{ id }}").select2({
+                    {% if value %}data : [{"id" : "{{ value.id }}", "title" : "{{ value.title }}", "genre" : "{{ value.genre }}"}],{% endif %}
+                    ajax: {
+                        url: "{{ path("suggest_item", { "_format" : "json"}) }}",
+                        width: '100%',
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                q: params.term
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: data.data
+                            };
+                        },
+                        cache: true
+                    },
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    minimumInputLength: 0,
+                    templateResult: formatRepo, // omitted for brevity, see the source of this page
+                    templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+                })
+                .on("select2:select", function (e)
+                {
+                    var data = e.params.data;
+
+                    $('#form_duration').val(data.duration);
+                });
+
+                function formatRepo (item)
+                {
+                    return item.html;
+                }
+
+                function formatRepoSelection (item)
+                {
+                    var html = '';
+
+                    if (item.hasOwnProperty('thumbnail')) {
+                        html += '<img class="thumbnail" style="float: left; max-height: 28px; max-width: 28px;" src="' + item.thumbnail + '" />&nbsp;';
+                    }
+
+                    html += "<label class='label label-info'>" + item.genre + "</label>&nbsp;&nbsp; <strong>" + (item.hasOwnProperty('title') ? item.title : '') + "</strong> ";
+
+                    return html;
+                }
+            });
+        </script>
+        <style>
+            #form-group-form_item .select2-results__option
+            {
+                float: left;
+                width: 50%;
+            }
+        </style>
+    {% endspaceless %}
