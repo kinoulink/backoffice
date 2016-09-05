@@ -35,7 +35,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     paths:
-        "%kernel.root_dir%/../src/BackofficeBundle/Resources/views": backoffice
+        "%kernel.root_dir%/../src/BackOfficeBundle/Resources/views": backoffice
         "%kernel.root_dir%/../src/CRMBundle/Resources/views": crm
 
 # Swiftmailer Configuration
