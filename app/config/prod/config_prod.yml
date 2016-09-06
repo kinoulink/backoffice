@@ -5,8 +5,7 @@ doctrine:
     dbal:
         driver:   pdo_sqlite
         charset:  UTF8
-        path: "/opt/ktv/volume/www/prod.db"
-
+        path: "/opt/ktv/volume/prod.db"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -26,7 +25,7 @@ monolog:
             handler:      nested
         nested:
             type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
+            path:  "php://stderr"
+            level: error
         console:
             type:  console
