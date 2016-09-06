@@ -1,0 +1,8 @@
+# This file is auto-generated during the composer install
+parameters:
+    mailer_transport: smtp
+    mailer_host: email-smtp.eu-west-1.amazonaws.com
+    mailer_user: AKIAIZPYBEJ5DBGSOWWA
+    mailer_password: Ao5A7IqMziESfhmW7sACrmJwYdi7VqO41WwSN3d+B8ue
+    secret: 15dc616ddd15fc9f002c085a0be39936f8e180d6
+    locale: fr
