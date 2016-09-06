@@ -1,11 +1,22 @@
 imports:
     - { resource: ../config.yml }
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+doctrine:
+    dbal:
+        driver:   pdo_sqlite
+        charset:  UTF8
+        path: "/opt/ktv/volume/www/prod.db"
+
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        metadata_cache_driver: apcu
+        result_cache_driver: apcu
+        query_cache_driver: apcu
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+          SonataAdminBundle: ~
 
 monolog:
     handlers:
